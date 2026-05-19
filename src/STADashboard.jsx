@@ -35,49 +35,6 @@ function initials(e) { return e.split('@')[0].split('.').map(p => p[0]?.toUpperC
 function fmt(n) { return Number(n.toFixed(0)).toLocaleString('es-AR'); }
 
 // ── CONFIG ────────────────────────────────────────────────────────────────
-const NUEVOS_USUARIOS = [
-  {fecha:'25 feb, 2026',vendor_id:'DO-217254600015',vendor_name:'Impressive Punta Cana',destino:'PUJ',ejecutivo:'gildania.pilarte@despegar.com'},
-  {fecha:'25 feb, 2026',vendor_id:'DO-217254600015',vendor_name:'Impressive Punta Cana',destino:'PUJ',ejecutivo:'gildania.pilarte@despegar.com'},
-  {fecha:'25 feb, 2026',vendor_id:'MX-HSC0010193M7',vendor_name:'Wyndham_Mty_Aeropuerto',destino:'MTY',ejecutivo:'adriana.mota.s@despegar.com'},
-  {fecha:'26 feb, 2026',vendor_id:'AR-30708973587',vendor_name:'VillaSofiaApartHotel',destino:'BRC',ejecutivo:'javier.oromi@despegar.com'},
-  {fecha:'26 feb, 2026',vendor_id:'AR-30714804908',vendor_name:'puertonortehotel',destino:'ROS',ejecutivo:'c.gonzalez@despegar.com'},
-  {fecha:'27 feb, 2026',vendor_id:'BR-05489669',vendor_name:'HotelPipaAtlantico',destino:'PR1',ejecutivo:'samira.barbosa@decolar.com'},
-  {fecha:'27 feb, 2026',vendor_id:'MX-OHE070511872',vendor_name:'Hampton_by_Hilton_GDL',destino:'GDL',ejecutivo:'adriana.mota.s@despegar.com'},
-  {fecha:'2 mar, 2026',vendor_id:'BR-10538339000280',vendor_name:'Revinn',destino:'SSA',ejecutivo:'laila.bastos@decolar.com'},
-  {fecha:'2 mar, 2026',vendor_id:'BR-10538339000280',vendor_name:'Revinn',destino:'SSA',ejecutivo:'laila.bastos@decolar.com'},
-  {fecha:'3 mar, 2026',vendor_id:'MX-KRM001017NN4',vendor_name:'KarismaHotelsResorts',destino:'NEG',ejecutivo:'axel.escobedo@despegar.com'},
-  {fecha:'3 mar, 2026',vendor_id:'MX-KRM001017NN4',vendor_name:'KarismaHotelsResorts',destino:'RM0',ejecutivo:'axel.escobedo@despegar.com'},
-  {fecha:'3 mar, 2026',vendor_id:'MX-KRM001017NN4',vendor_name:'KarismaHotelsResorts',destino:'PUJ',ejecutivo:'axel.escobedo@despegar.com'},
-  {fecha:'3 mar, 2026',vendor_id:'MX-KRM001017NN4',vendor_name:'KarismaHotelsResorts',destino:'RM0',ejecutivo:'axel.escobedo@despegar.com'},
-];
-
-const CARGAS_SALDO = [
-  {fecha:'14 abr, 2026',vendor_id:'AR-30710421990',vendor_name:'GranHotelVictoria',monto:2250,currency:'USD',tipo:'IO_SIGNED',status:'ACCREDITED',ejecutivo:'maria.an.sanchez@despegar.com'},
-  {fecha:'15 abr, 2026',vendor_id:'CO-9004099281',vendor_name:'BINNHOTEL',monto:200000,currency:'COP',tipo:'CREDIT_CARD',status:'BILLED',ejecutivo:'jefferson.bedoya@despegar.com'},
-  {fecha:'15 abr, 2026',vendor_id:'MX-RPR160428JG0',vendor_name:'RudoProducciones',monto:2500,currency:'MXN',tipo:'CREDIT_CARD',status:'BILLED',ejecutivo:'leonardo.gonzalez.b@despegar.com'},
-  {fecha:'15 abr, 2026',vendor_id:'MX-RPR160428JG0',vendor_name:'RudoProducciones',monto:2500,currency:'MXN',tipo:'CREDIT_CARD',status:'BILLED',ejecutivo:'leonardo.gonzalez.b@despegar.com'},
-  {fecha:'16 abr, 2026',vendor_id:'AR-30716037017',vendor_name:'lagosdelcalafate',monto:99999,currency:'ARS',tipo:'CREDIT_CARD',status:'BILLED',ejecutivo:'marcelo.losada@despegar.com'},
-  {fecha:'17 abr, 2026',vendor_id:'AR-30715280260',vendor_name:'HTLhoteles',monto:300000,currency:'ARS',tipo:'CREDIT_CARD',status:'ACCREDITED',ejecutivo:'nicolas.trione@despegar.com'},
-  {fecha:'17 abr, 2026',vendor_id:'AR-30715280260',vendor_name:'HTLhoteles',monto:300000,currency:'ARS',tipo:'CREDIT_CARD',status:'ACCREDITED',ejecutivo:'nicolas.trione@despegar.com'},
-];
-
-
-const ALERT_CONFIG = [
-  { key:'a1', icon:'ti-alert-circle', title:'\uD83D\uDD34 Bajo presupuesto', bg:'#FCEBEB', border:'#F09595', headText:'#791F1F', dotColor:'#E24B4A', badgeBg:'#F7C1C1', badgeText:'#791F1F', desc:'Saldo actual menor a la inversión quincenal sugerida.', accion:'Contactar al vendor para revisar inversión y cargar saldo.' },
-  { key:'a2', icon:'ti-trending-down', title:'📉 Caída de inversión >50%', bg:'#FAEEDA', border:'#EF9F27', headText:'#633806', dotColor:'#BA7517', badgeBg:'#FAC775', badgeText:'#633806', desc:'La inversión cayó más del 50% vs. la semana anterior.', accion:'Investigar causa: falta de saldo, campañas pausadas, problemas técnicos.' },
-  { key:'a3', icon:'ti-building-off', title:'🏨 Caída de hoteles activos', bg:'#E6F1FB', border:'#85B7EB', headText:'#0C447C', dotColor:'#378ADD', badgeBg:'#B5D4F4', badgeText:'#0C447C', desc:'Menos hoteles activos que la semana anterior.', accion:'Verificar qué hoteles desactivaron campañas.' },
-  { key:'a4', icon:'ti-cash', title:'⚠️ Con saldo, sin campañas', bg:'#E1F5EE', border:'#5DCAA5', headText:'#085041', dotColor:'#1D9E75', badgeBg:'#9FE1CB', badgeText:'#085041', desc:'El vendor tiene presupuesto pero sin campañas activas.', accion:'Contactar para crear o activar campañas.' },
-  { key:'a5', icon:'ti-pause', title:'🛑 Sin saldo, con campañas', bg:'#EEEDFE', border:'#AFA9EC', headText:'#3C3489', dotColor:'#7F77DD', badgeBg:'#CECBF6', badgeText:'#3C3489', desc:'Campañas configuradas pero sin presupuesto disponible.', accion:'Solicitar carga de saldo para que las campañas se ejecuten.' },
-  { key:'a7', icon:'ti-user-plus', title:'\uD83C\uDD95 Nuevos usuarios (\u00faltima semana)', bg:'#EDE9F7', border:'#C4B5F0', headText:'#3B1FA3', dotColor:'#6D4ADE', badgeBg:'#D4C9F7', badgeText:'#3B1FA3', desc:'Hoteles incorporados en los \u00faltimos 7 d\u00edas.', accion:'Contactar para asegurarse que las campa\u00f1as est\u00e1n activas.' },
-  { key:'a8', icon:'ti-cash', title:'\uD83D\uDCB0 Cargas de saldo (\u00faltima semana)', bg:'#E8EDF7', border:'#B5C4F0', headText:'#1F3FA3', dotColor:'#4A6ADE', badgeBg:'#C9D4F7', badgeText:'#1F3FA3', desc:'Cargas de saldo registradas en los \u00faltimos 7 d\u00edas.', accion:'Dar seguimiento para activar o revisar campa\u00f1as.' },
-  { key:'a6', icon:'ti-ban', title:'\uD83D\uDCA4 Sin actividad', bg:'#F1EFE8', border:'#B4B2A9', headText:'#444441', dotColor:'#888780', badgeBg:'#D3D1C7', badgeText:'#444441', desc:'Vendor registrado sin saldo ni campañas.', accion:'Contactar para acompañar el onboarding.' },
-];
-
-const CAUSE_LABELS = {
-  no_saldo:  { text:'Sin saldo', bg:'#FCEBEB', color:'#791F1F', icon:'ti-wallet-off' },
-  campanas:  { text:'Pausó campañas', bg:'#EEEDFE', color:'#3C3489', icon:'ti-player-pause' },
-  both:      { text:'Sin saldo · Pausó campañas', bg:'#FFF3CD', color:'#664D03', icon:'ti-alert-triangle' },
-};
 
 // ── COMPONENTS ───────────────────────────────────────────────────────────
 function CausePill({ cause }) {
