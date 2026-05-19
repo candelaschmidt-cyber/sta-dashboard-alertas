@@ -224,7 +224,7 @@ export default function STADashboard() {
   }
 
   useEffect(function() {
-    fetch("https://script.google.com/a/macros/despegar.com/s/AKfycby5ZixwD1vBWj-_8-EET6WmlSA6EXeRiumKkjbeH_hHp_wRlEMoRHibzg2pubxDMq5a/exec")
+    fetch("/api/data")
       .then(function(res) { return res.json(); })
       .then(function(json) {
         var vendors = (json.vendors || []).map(function(r) {
